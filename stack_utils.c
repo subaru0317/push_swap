@@ -6,24 +6,11 @@
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:22:36 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/17 14:05:48 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/17 16:32:59 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-t_stack	*stack_init(void)
-{
-	t_stack	*acc;
-
-	acc = (t_stack *)malloc(sizeof(t_stack));
-	if (!acc)
-		return (NULL);
-	acc->content = NULL;
-	acc->next = acc;
-	acc->prev = acc;
-	return (acc);
-}
 
 int	stack_size(t_stack *stack)
 {
@@ -45,15 +32,15 @@ int	stack_size(t_stack *stack)
 
 void	stack_free(t_stack *stack)
 {
-	int siz;
-	
+	int	siz;
+
 	siz = stack_size(stack);
 	while (siz >= 0)
 	{
 		pop(stack);
 		siz--;
 	}
-	free(stack); // sentinel
+	free(stack);
 }
 
 t_elem	stack_min_content(t_stack *stack)
@@ -90,4 +77,23 @@ t_elem	stack_max_content(t_stack *stack)
 		current_node = current_node->next;
 	}
 	return (max_content);
+}
+
+int	stack_content_index(t_stack *stack, t_elem elem)
+{
+	int		index;
+	t_stack	*sentinel;
+	t_stack	*current_node;
+
+	sentinel = stack;
+	current_node = stack->next;
+	index = 0;
+	while (current_node != sentinel)
+	{
+		if (elem == *(current_node->content))
+			return (index);
+		index++;
+		current_node = current_node->next;
+	}
+	return (-1);
 }

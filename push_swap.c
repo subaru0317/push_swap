@@ -6,11 +6,24 @@
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:10:34 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/17 15:15:47 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/17 16:33:10 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+static t_stack	*stack_init(void)
+{
+	t_stack	*acc;
+
+	acc = (t_stack *)malloc(sizeof(t_stack));
+	if (!acc)
+		return (NULL);
+	acc->content = NULL;
+	acc->next = acc;
+	acc->prev = acc;
+	return (acc);
+}
 
 static int *create_int_array_from_string_array(char **str)
 {
@@ -23,10 +36,7 @@ static int *create_int_array_from_string_array(char **str)
 		len++;
 	result = (int *)malloc(sizeof(int) * len);
 	if (!result)
-	{
-		exit(1);
 		return (NULL);
-	}
 	i = 0;
 	while (i < len)
 	{
@@ -143,7 +153,6 @@ void	push_swap(int argc, char **argv)
 	stack_free(b);
 }
 
-#include <stdio.h>
 int main(int argc, char **argv)
 {
 	push_swap(argc, argv);

@@ -6,7 +6,7 @@
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:09:01 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/17 15:07:36 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/17 16:52:39 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@
 // 	return (((min + max) * 2 + 2) / 3);
 // }
 
+#define EFFICIENT_SORT_THRESHOLD 6
+
+static void	stack_quick_sort(t_stack *a, t_stack *b);
 
 static t_elem	choose_pivot(t_stack *stack)
 {
@@ -67,9 +70,7 @@ static t_elem	choose_pivot(t_stack *stack)
 	return (min / 2 + max / 2 + (min % 2 + max % 2 + 1) / 2);
 }
 
-#define EFFICIENT_SORT_THRESHOLD 6
-
-void	short_stack_sort(t_stack *a, t_stack *b)
+static void	short_stack_sort(t_stack *a, t_stack *b)
 {
 	int	b_size;
 
@@ -90,20 +91,36 @@ void	short_stack_sort(t_stack *a, t_stack *b)
 	}
 }
 
-// void	recursive_quick_sort(t_stack *a, t_stack *b)
-// {
-// 	// 移植しても大丈夫？
-// }
-
-
-void stack_quick_sort(t_stack *a, t_stack *b)
+static void	recursive_quick_sort(t_stack *a, t_stack *b)
 {
-	int	b_size;
 	int	pivot_content;
+	int	b_size;
 	int	pa_count;
 
+	pivot_content = choose_pivot(b);
 	b_size = stack_size(b);
 	pa_count = 0;
+	while (b_size--)
+	{
+		if (*(b->next->content) <= pivot_content)
+			execute_rb(b);
+		else
+		{
+			execute_pa(a, b);
+			pa_count++;
+		}
+	}
+	stack_quick_sort(a, b);
+	while (pa_count--)
+		execute_pb(a, b);
+	stack_quick_sort(a, b);
+}
+
+static void	stack_quick_sort(t_stack *a, t_stack *b)
+{
+	int	b_size;
+
+	b_size = stack_size(b);
 	if (stack_is_sorted(b))
 	{
 		while (b_size--)
@@ -111,28 +128,11 @@ void stack_quick_sort(t_stack *a, t_stack *b)
 			execute_pa(a, b);
 			execute_ra(a);
 		}
-		return ;
 	}
 	else if (b_size <= EFFICIENT_SORT_THRESHOLD)
 		short_stack_sort(a, b);
 	else
-	{
-		pivot_content = choose_pivot(b);
-		while (b_size--)
-		{
-			if (*(b->next->content) <= pivot_content)
-				execute_rb(b);
-			else
-			{
-				execute_pa(a, b);
-				pa_count++;
-			}
-		}
-		stack_quick_sort(a, b);
-		while (pa_count--)
-			execute_pb(a, b);
-		stack_quick_sort(a, b);
-	}
+		recursive_quick_sort(a, b);
 }
 
 void	sort_seven_or_more_elements(t_stack *a, t_stack *b)
@@ -159,4 +159,3 @@ void	sort_seven_or_more_elements(t_stack *a, t_stack *b)
 		execute_pb(a, b);
 	stack_quick_sort(a, b);
 }
-

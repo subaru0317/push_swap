@@ -6,23 +6,23 @@
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:09:19 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/17 15:07:42 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/17 16:50:47 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	PUSH_SWAP_H
+#ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-#include <stdlib.h>
-#include <limits.h>
-#include <unistd.h>
-#include "libft/libft.h"
+# include <stdlib.h>
+# include <limits.h>
+# include <unistd.h>
+# include "libft/libft.h"
 
-typedef int t_elem;
+typedef int	t_elem;
 
 typedef struct s_stack
 {
-	t_elem	*content;
+	t_elem			*content;
 	struct s_stack	*next;
 	struct s_stack	*prev;
 }	t_stack;
@@ -60,7 +60,7 @@ void	push(t_stack *stack, int content);
 void	pop(t_stack *stack);
 
 // stack_debug_utils
-void	print_stack(t_stack *a, t_stack *b);
+// void	print_stack(t_stack *a, t_stack *b);
 
 // stack_is_sorted
 int		stack_is_sorted(t_stack *stack);
@@ -99,14 +99,12 @@ void	sb(t_stack *b);
 void	execute_sb(t_stack *b);
 
 // stack_utils
-t_stack	*stack_init(void);
 int		stack_size(t_stack *stack);
 void	stack_free(t_stack *stack);
 t_elem	stack_min_content(t_stack *stack);
 t_elem	stack_max_content(t_stack *stack);
-
+int		stack_content_index(t_stack *stack, t_elem elem);
 
 // validate
 int		is_int(char *nptr);
-
 #endif
