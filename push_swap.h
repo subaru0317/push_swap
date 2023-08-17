@@ -6,7 +6,7 @@
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:09:19 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/15 11:52:52 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/17 15:07:42 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 #include <limits.h>
 #include <unistd.h>
 #include "libft/libft.h"
-// TODO:
-//	Delete
-#include <stdio.h>
 
 typedef int t_elem;
 
@@ -41,8 +38,11 @@ int		*coordinate_compression(int *arr, size_t arr_size);
 // push_swap
 void	push_swap(int argc, char **argv);
 
-// sort_four_to_six_elements
-void	sort_four_to_six_elements(t_stack *a, t_stack *b);
+// sort_four_to_six_elements_a
+void	sort_four_to_six_elements_a(t_stack *a, t_stack *b);
+
+// sort_four_to_six_elements_b
+void	sort_four_to_six_elements_b(t_stack *a, t_stack *b);
 
 // sort_seven_or_more_elements
 void	sort_seven_or_more_elements(t_stack *a, t_stack *b);
@@ -61,6 +61,9 @@ void	pop(t_stack *stack);
 
 // stack_debug_utils
 void	print_stack(t_stack *a, t_stack *b);
+
+// stack_is_sorted
+int		stack_is_sorted(t_stack *stack);
 
 // stack_operation_double_reverse_rotate
 void	execute_rrr(t_stack *a, t_stack *b);
@@ -99,6 +102,9 @@ void	execute_sb(t_stack *b);
 t_stack	*stack_init(void);
 int		stack_size(t_stack *stack);
 void	stack_free(t_stack *stack);
+t_elem	stack_min_content(t_stack *stack);
+t_elem	stack_max_content(t_stack *stack);
+
 
 // validate
 int		is_int(char *nptr);

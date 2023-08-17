@@ -6,7 +6,7 @@
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:16:43 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/12 19:05:32 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/15 14:35:34 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_stack(t_stack *a, t_stack *b)
 	current_node_a = a->next;
 	sentinel_b = b;
 	current_node_b = b->next;
-	while (!(sentinel_a == current_node_a && sentinel_b == current_node_b))
+	while (sentinel_a != current_node_a || sentinel_b != current_node_b)
 	{
 		if (sentinel_a != current_node_a)
 		{

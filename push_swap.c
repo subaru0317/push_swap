@@ -6,7 +6,7 @@
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:10:34 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/15 12:37:55 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/17 15:15:47 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ static int *create_int_array_from_string_array(char **str)
 		len++;
 	result = (int *)malloc(sizeof(int) * len);
 	if (!result)
+	{
+		exit(1);
 		return (NULL);
+	}
 	i = 0;
 	while (i < len)
 	{
@@ -125,7 +128,6 @@ void	push_swap(int argc, char **argv)
 	if (!a)
 		return ;
 	b = stack_init();
-	print_stack(a, b);
 	len = stack_size(a);
 	if (len <= 1)
 		return ;
@@ -134,13 +136,9 @@ void	push_swap(int argc, char **argv)
   	else if (len == 3)
 		sort_three_elements_a(a);
   	else if (4 <= len && len <= 6)
-		sort_four_to_six_elements(a, b);
+		sort_four_to_six_elements_a(a, b);
   	else
     	sort_seven_or_more_elements(a, b);
-	// TODO:
-	//	a, bをfreeする。
-	//	aのcontentをfreeする。
-	write(1, "END\n", 4);
 	stack_free(a);
 	stack_free(b);
 }
@@ -150,9 +148,3 @@ int main(int argc, char **argv)
 {
 	push_swap(argc, argv);
 }
-
-// __attribute__((destructor))
-// void  end()
-// {
-//   while(1);
-// }

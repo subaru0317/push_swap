@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_four_to_six_elements.c                        :+:      :+:    :+:   */
+/*   sort_four_to_six_elements_a.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:02:49 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/12 18:36:39 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/17 12:08:54 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,24 @@ static void	move_min_to_top_a(t_stack *a)
 }
 
 
-void	sort_four_to_six_elements(t_stack *a, t_stack *b)
+void	sort_four_to_six_elements_a(t_stack *a, t_stack *b)
 {
 	int count;
+	int	i;
 
 	count = stack_size(a) - 3;
-	while (count)
+	i = 0;
+	while (i < count)
 	{
 		move_min_to_top_a(a);
 		execute_pb(a, b);
-		count--;
+		i++;
 	}
 	sort_three_elements_a(a);
-	count = stack_size(b);
-	while (count)
+	i = 0;
+	while (i < count)
 	{
 		execute_pa(a, b);
-		count--;
+		i++;
 	}
 }

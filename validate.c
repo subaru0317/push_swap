@@ -44,6 +44,8 @@ int	is_int(char *nptr)
 		nptr_len--;
 		nptr++;
 	}
+	if (nptr_len == 0)
+		return (0);
 	cutoff = ft_is_overflow(sign);
 	cutlim = cutoff % 10;
 	cutoff /= 10;

@@ -6,41 +6,79 @@
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:09:01 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/15 12:41:54 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/17 15:07:36 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	choose_pivot(t_stack *stack)
-{
-	int		min;
-	int		max;
-	t_stack	*sentinel;
-	t_stack	*current_node;
+// static int	choose_low_pivot(t_stack *stack)
+// {
+// 	int		min;
+// 	int		max;
+// 	t_stack	*sentinel;
+// 	t_stack	*current_node;
 
-	min = INT_MAX;
-	max = INT_MIN;
-	sentinel = stack;
-	current_node = stack->next;
-	while (current_node != sentinel)
-	{
-		if (min > *(current_node->content))
-			min = *(current_node->content);
-		if (max < *(current_node->content))
-			max = *(current_node->content);
-		current_node = current_node->next;
-	}
+// 	min = INT_MAX;			
+// 	max = INT_MIN;
+// 	sentinel = stack;
+// 	current_node = stack->next;
+// 	while (current_node != sentinel)
+// 	{
+// 		if (min > *(current_node->content))
+// 			min = *(current_node->content);
+// 		if (max < *(current_node->content))
+// 			max = *(current_node->content);
+// 		current_node = current_node->next;
+// 	}
+// 	return ((min + max) / 3);
+// }
+
+// static int	choose_high_pivot(t_stack *stack)
+// {
+// 	int		min;
+// 	int		max;
+// 	t_stack	*sentinel;
+// 	t_stack	*current_node;
+
+// 	min = INT_MAX;			
+// 	max = INT_MIN;
+// 	sentinel = stack;
+// 	current_node = stack->next;
+// 	while (current_node != sentinel)
+// 	{
+// 		if (min > *(current_node->content))
+// 			min = *(current_node->content);
+// 		if (max < *(current_node->content))
+// 			max = *(current_node->content);
+// 		current_node = current_node->next;
+// 	}
+// 	return (((min + max) * 2 + 2) / 3);
+// }
+
+
+static t_elem	choose_pivot(t_stack *stack)
+{
+	t_elem	min;
+	t_elem	max;
+
+	min = stack_min_content(stack);
+	max = stack_max_content(stack);
 	return (min / 2 + max / 2 + (min % 2 + max % 2 + 1) / 2);
 }
 
-#define EFFICIENT_SORT_THRESHOLD 3
+#define EFFICIENT_SORT_THRESHOLD 6
 
 void	short_stack_sort(t_stack *a, t_stack *b)
 {
 	int	b_size;
 
 	b_size = stack_size(b);
+	if (4 <= b_size && b_size <= 6)
+	{
+		sort_four_to_six_elements_b(a, b);
+		return ;
+	}
 	if (b_size == 3)
 		sort_three_elements_b(b);
 	else if (b_size == 2)
@@ -66,15 +104,23 @@ void stack_quick_sort(t_stack *a, t_stack *b)
 
 	b_size = stack_size(b);
 	pa_count = 0;
-	if (b_size <= EFFICIENT_SORT_THRESHOLD)
+	if (stack_is_sorted(b))
+	{
+		while (b_size--)
+		{
+			execute_pa(a, b);
+			execute_ra(a);
+		}
+		return ;
+	}
+	else if (b_size <= EFFICIENT_SORT_THRESHOLD)
 		short_stack_sort(a, b);
 	else
 	{
 		pivot_content = choose_pivot(b);
 		while (b_size--)
 		{
-			print_stack(a, b);
-			if (*(b->next->content) < pivot_content)
+			if (*(b->next->content) <= pivot_content)
 				execute_rb(b);
 			else
 			{
@@ -89,12 +135,6 @@ void stack_quick_sort(t_stack *a, t_stack *b)
 	}
 }
 
-
-// 1.
-// a->bに分割
-// pivot未満をbにpush
-// 2.
-// bに配分された要素数がEFFICIENT_SORT_THRESHOLD以下の場合
 void	sort_seven_or_more_elements(t_stack *a, t_stack *b)
 {
 	int	pivot_content;
@@ -119,3 +159,4 @@ void	sort_seven_or_more_elements(t_stack *a, t_stack *b)
 		execute_pb(a, b);
 	stack_quick_sort(a, b);
 }
+
