@@ -6,7 +6,7 @@
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:09:37 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/17 15:12:34 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/19 12:14:30 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,14 @@ void	ft_qsort(int *arr, int left, int right)
 	swap(&arr[i], &arr[right - 1]);
 	ft_qsort(arr, left, i);
 	ft_qsort(arr, i + 1, right);
+}
+
+size_t	count_strings(char **strings)
+{
+	size_t	strings_count;
+
+	strings_count = 0;
+	while (strings != NULL && strings[strings_count])
+		strings_count++;
+	return (strings_count);
 }

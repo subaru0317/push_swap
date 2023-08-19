@@ -6,7 +6,7 @@
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:09:19 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/19 11:00:47 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/19 12:31:03 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_stack
 void	print_int_array(int *arr, size_t arr_size);
 int		is_sorted(int *arr, size_t arr_size);
 void	ft_qsort(int *arr, int left, int right);
+size_t	count_strings(char **strings);
 
 // coordinate_compression
 int		*coordinate_compression(int *arr, size_t arr_size);
@@ -39,7 +40,7 @@ int		*coordinate_compression(int *arr, size_t arr_size);
 void	ft_error(void);
 
 // parse_args
-// t_stack	*parse_args_to_stack(int argc, char **argv);
+t_stack	*parse_args_to_stack(int argc, char **argv);
 
 // push_swap
 void	push_swap(int argc, char **argv);
@@ -66,7 +67,7 @@ void	push(t_stack *stack, int content);
 void	pop(t_stack *stack);
 
 // stack_debug_utils
-// void	print_stack(t_stack *a, t_stack *b);
+void	print_stack(t_stack *a, t_stack *b);
 
 // stack_is_sorted
 int		stack_is_sorted(t_stack *stack);
@@ -113,6 +114,7 @@ int		stack_content_index(t_stack *stack, t_elem elem);
 
 // stack_utils_two
 t_stack	*stack_init(void);
+void	push_array_to_stack(t_stack *stack, int *arr, int arr_size);
 
 // validate
 int		is_int(char *nptr);

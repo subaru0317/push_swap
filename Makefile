@@ -4,6 +4,7 @@ CFLAGS	=	-Wall -Wextra -Werror
 SRCS	=	array_utils.c \
 			coordinate_compression.c \
 			error.c \
+			parse_args.c \
 			push_swap.c \
 			sort_four_to_six_elements_a.c \
 			sort_four_to_six_elements_b.c \
