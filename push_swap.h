@@ -6,7 +6,7 @@
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:09:19 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/19 10:51:29 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/19 11:00:47 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ int		*coordinate_compression(int *arr, size_t arr_size);
 
 // error
 void	ft_error(void);
+
+// parse_args
+// t_stack	*parse_args_to_stack(int argc, char **argv);
 
 // push_swap
 void	push_swap(int argc, char **argv);

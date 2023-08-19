@@ -3,6 +3,7 @@ CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror
 SRCS	=	array_utils.c \
 			coordinate_compression.c \
+			error.c \
 			push_swap.c \
 			sort_four_to_six_elements_a.c \
 			sort_four_to_six_elements_b.c \
@@ -20,6 +21,7 @@ SRCS	=	array_utils.c \
 			stack_operation_rotate.c \
 			stack_operation_swap.c \
 			stack_utils.c \
+			stack_utils_two.c \
 			validate.c
 OBJS	=	${SRCS:%.c=%.o}
 

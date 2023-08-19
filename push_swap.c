@@ -6,13 +6,13 @@
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:10:34 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/19 10:51:55 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/19 11:17:08 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int *create_int_array_from_string_array(char **str)
+static int *string_array_to_int_array(char **str)
 {
 	int		len;
 	int		i;
@@ -35,6 +35,40 @@ static int *create_int_array_from_string_array(char **str)
 	return (result);
 }
 
+char	**argv_to_string_array(int argc, char **argv)
+{
+	char	**str;
+
+	if (argc <= 1)
+		exit(0);
+	else if (argc == 2)
+	{
+		str = ft_split(argv[1], ' ');
+		if (!str)
+			ft_error();
+	}
+	else
+	{
+		int		arr_size;
+		int		i;
+
+		arr_size = argc - 1;
+		str = (char **)malloc(sizeof(char *) * (arr_size + 1));
+		if (!str)
+			ft_error();
+		i = 0;
+		while (i + 1 < argc)
+		{
+			str[i] = ft_strdup(argv[i + 1]);
+			if (!str[i])
+				ft_error();
+			i++;
+		}
+		str[arr_size] = NULL;
+	}
+	return (str);
+}
+
 // 途中でError発生した時用にfreeすること
 static t_stack	*parse_args_to_stack(int argc, char **argv)
 {
@@ -45,44 +79,40 @@ static t_stack	*parse_args_to_stack(int argc, char **argv)
 	char	**str;
 	size_t	arr_size;
 
-	stack = stack_init();
-	if (argc <= 1)
-		return (NULL);
-	if (argc == 2)
-	{
-		str = ft_split(argv[1], ' ');
-		if (!str)
-		{
-			write(1, "Error\n", 6);
-			return (NULL);
-		}
-		arr_size = 0;
-		while (str != NULL && str[arr_size])
-			arr_size++;
-	}
-	else
-	{
-		i = 0;
-		arr_size = argc - 1;
-		str = (char **)malloc(sizeof(char *) * (arr_size + 1));
-		if (!str)
-		{
-			write(1, "Error\n", 6);
-			return (NULL);
-		}
-		while (i + 1 < argc)
-		{
-			str[i] = ft_strdup(argv[i + 1]);
-			i++;
-		}
-		str[arr_size] = NULL;
-	}
-	arr = create_int_array_from_string_array(str);
+	// stack = stack_init();
+	// if (argc <= 1)
+	// 	return (NULL);
+	// if (argc == 2)
+	// {
+	// 	str = ft_split(argv[1], ' ');
+	// 	if (!str)
+	// 		ft_error();
+	// 	arr_size = 0;
+	// 	while (str != NULL && str[arr_size])
+	// 		arr_size++;
+	// }
+	// else
+	// {
+	// 	i = 0;
+	// 	arr_size = argc - 1;
+	// 	str = (char **)malloc(sizeof(char *) * (arr_size + 1));
+	// 	if (!str)
+	// 		ft_error();
+	// 	while (i + 1 < argc)
+	// 	{
+	// 		str[i] = ft_strdup(argv[i + 1]);
+	// 		i++;
+	// 	}
+	// 	str[arr_size] = NULL;
+	// }
+
+	str = argv_to_string_array(argc, argv);
+	arr_size = 0;
+	while (str != NULL && str[arr_size])
+		arr_size++;
+	arr = string_array_to_int_array(str);
 	if (!arr)
-	{
-		write(1, "Error\n", 6);
-		return (NULL);
-	}
+		ft_error();
 	i = 0;
 	while ((size_t)i < arr_size)
 	{
@@ -91,20 +121,15 @@ static t_stack	*parse_args_to_stack(int argc, char **argv)
 	}
 	free(str);
 	if (!arr)
-	{
-		write(1, "Error\n", 6);
-		return (NULL);
-	}
+		ft_error();
 	if (is_sorted(arr, arr_size))
     	return (NULL);
 	compressed_arr = coordinate_compression(arr, arr_size);
 	free(arr);
 	if (!compressed_arr)
-	{
-		write(1, "Error\n", 6);
-		return (NULL);
-	}
+		ft_error();
 	i = arr_size - 1;
+	stack = stack_init();
 	while (i >= 0)
 	{
 		push(stack, compressed_arr[i]);
@@ -121,8 +146,6 @@ void	push_swap(int argc, char **argv)
 	int		len;
 
 	a = parse_args_to_stack(argc, argv);
-	if (!a)
-		return ;
 	b = stack_init();
 	len = stack_size(a);
 	if (len <= 1)
