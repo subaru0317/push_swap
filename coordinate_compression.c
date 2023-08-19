@@ -6,7 +6,7 @@
 /*   By: smihata <smihata@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:11:30 by smihata           #+#    #+#             */
-/*   Updated: 2023/08/13 11:41:02 by smihata          ###   ########.fr       */
+/*   Updated: 2023/08/17 18:07:29 by smihata          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,15 @@ int	*coordinate_compression(int *arr, size_t arr_size)
 
 	compressed_arr = (int *)malloc(sizeof(int) * arr_size);
 	sorted_arr = (int *)malloc(sizeof(int) * arr_size);
+	if (!compressed_arr || !sorted_arr)
+		ft_error();
 	ft_memcpy(sorted_arr, arr, arr_size * sizeof(int));
 	ft_qsort(sorted_arr, 0, arr_size);
 	i = 0;
 	while (i + 1 < arr_size)
 	{
 		if (sorted_arr[i] == sorted_arr[i + 1])
-			return (NULL);
+			ft_error();
 		i++;
 	}
 	i = 0;
